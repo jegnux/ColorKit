@@ -153,10 +153,12 @@ extension UIImage {
 
         for yCoordonate in 0 ..< cgImage.height {
             for xCoordonate in 0 ..< cgImage.width {
-                let index = (cgImage.width * yCoordonate + xCoordonate) * 4
+                let bytesPerPixel = cgImage.bitsPerPixel / 8
+
+                let index = (cgImage.bytesPerRow * yCoordonate) + (xCoordonate * bytesPerPixel)
                 
                 // Let's make sure there is enough alpha.
-                guard data[index + 3] > 50 else { continue }
+                guard data[index + 3] > 150 else { continue }
                 
                 let pixelColor = RGB(R: data[index + 0], G: data[index + 1], B:  data[index + 2])
                 colorsCountedSet.add(pixelColor)
